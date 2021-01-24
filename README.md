@@ -22,8 +22,8 @@ func main() {
   
   cookie := &http.Cookie{
     Name: value.Key,
-    Value: encoded, <- This is our encoded cookie value
-    Expires: time.Time, <- This is when our cookie is set to expire
+    Value: encoded, // <- This is our encoded cookie value
+    Expires: time.Time, // <- This is when our cookie is set to expire
   }
 }
 ```
