@@ -3,8 +3,6 @@ Cookiecode is a package that allows you to encrypt and decrypt your cookies for 
 
 ## Example Code
 ```go
-package main
-
 import (
   "time"
   "log"
