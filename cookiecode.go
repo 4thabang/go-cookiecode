@@ -62,21 +62,6 @@ func Encode(value map[string]string) (string, error) {
 	return encode, nil
 }
 
-/* [sample code below]
-
-cookie, err := r.Cookie("key")
-if err != nil {
-	log.Print(err)
-}
-
-value, err := cookiecode.Decode(cookie.Value)
-if err != nil {
-	log.Print(err)
-}
-
-return value["key"]
-*/
-
 // Decode allows us to decode our cookie in order to consume it safely, awaay from prying eyes.
 func Decode(key, cookie string) (map[string]string, error) {
 	// TODO: fix invalid map argument
