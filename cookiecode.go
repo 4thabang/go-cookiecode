@@ -9,6 +9,7 @@ import (
 
 /*
 	TODO: how will the users add their keys
+	TODO: find api for hash and block key generation
 	TODO: better godocs comments
 */
 
@@ -34,25 +35,6 @@ func Keys(v map[string]string) (*securecookie.SecureCookie, error) {
 	return secure, nil
 }
 
-/* [sample code below]
-
-value := map[string]interface{}{
-	"token": cookieValue,
-}
-
-encoded, err := cookiecode.Encode(value)
-if err != nil {
-	fmt.Println(err)
-}
-
-cookie := &http.Cookie{
-	Name: "token",
-	Value: encoded, <-- our encoded cookie value
-	Expires: time.Time, <-- time to expiry
-}
-
-*/
-
 // EncodeType is a struct that houses the value of our key which will be
 // determined by the user at runtime.
 type EncodeType struct {
@@ -67,12 +49,12 @@ func Encode(value map[string]string) (string, error) {
 		fmt.Println(err)
 	}
 
-	e := &EncodeType{
+	et := &EncodeType{
 		Key: value["key"],
 	}
 
 	// cookiecode.Encode("access_token", cookie.Value)
-	encode, err := secure.Encode(e.Key, value)
+	encode, err := secure.Encode(et.Key, value)
 	if err != nil {
 		fmt.Println(err)
 	}
