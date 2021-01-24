@@ -1,4 +1,4 @@
-# go-cookiecode
+# Cookiecode
 Cookiecode is a package that allows you to encrypt and decrypt your cookies for production grade use. Keep your cookies secure.
 
 ## Example Code
@@ -6,10 +6,14 @@ Cookiecode is a package that allows you to encrypt and decrypt your cookies for 
 package main
 
 import (
-  cookiecode github.com/4thabang/go-cookiecode
+  "time"
+  "log"
+  "net/http"
+  
+  cookiecode "github.com/4thabang/go-cookiecode"
 )
 
-func main() {
+func CookieHandler(w http.Response, r *http.Request) {
   value := map[string]string{
     "key": cookieKey,
     "value": cookieValue
@@ -25,5 +29,7 @@ func main() {
     Value: encoded, // <- This is our encoded cookie value
     Expires: time.Time, // <- This is when our cookie is set to expire
   }
+  
+  http.SetCokkie(w, cookie)
 }
 ```
