@@ -42,7 +42,7 @@ import (
   "log"
   "net/http"
 
-  "cookiecode github.com/4thabang/go-cookiecode"
+  cookiecode "github.com/4thabang/go-cookiecode"
 )
 
 func CookieDecoer(w http.ResponseWriter, r *http.Request) {
