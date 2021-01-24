@@ -13,7 +13,7 @@ import (
   cookiecode "github.com/4thabang/go-cookiecode"
 )
 
-func CookieHandler(w http.Response, r *http.Request) {
+func CookieHandler(w http.ResponseWriter, r *http.Request) {
   value := map[string]string{
     "key": cookieKey,
     "value": cookieValue
@@ -30,6 +30,7 @@ func CookieHandler(w http.Response, r *http.Request) {
     Expires: time.Time, // <- This is when our cookie is set to expire
   }
   
+  // Set our encoded cookie value here.
   http.SetCokkie(w, cookie)
 }
 ```
