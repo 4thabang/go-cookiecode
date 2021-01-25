@@ -43,10 +43,9 @@ type EncodeType struct {
 
 // Encode allows us to encode our cookie in order to keep it secure, safe and unexposed.
 func Encode(value map[string]string) (string, error) {
-	// TODO: fix invalid map argument
 	secure, err := Keys(value)
 	if err != nil {
-		fmt.Println(err)
+		return "", err
 	}
 
 	et := &EncodeType{
@@ -56,7 +55,7 @@ func Encode(value map[string]string) (string, error) {
 	// cookiecode.Encode("access_token", cookie.Value)
 	encode, err := secure.Encode(et.Key, value)
 	if err != nil {
-		fmt.Println(err)
+		return "", err
 	}
 
 	return encode, nil
