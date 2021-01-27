@@ -2,7 +2,7 @@
 
 Cookiecode is a package that allows you to encrypt and decrypt your cookies for production grade use. Keep your cookies secure.
 
-## Encode Code Snippet
+## Encode Example
 
 ```go
 import (
@@ -15,8 +15,8 @@ import (
 
 func CookieEncoder(w http.ResponseWriter, r *http.Request) {
   value := map[string]string{
-    "key": cookieKey,
-    "value": cookieValue
+    "key": cookieKey, // <- Enter cookie key here
+    "value": cookieValue, // <- Enter cookie value here
   }
 
   encoded, err := cookiecode.Encode(value)
@@ -35,7 +35,7 @@ func CookieEncoder(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-## Decode Code Snippet
+## Decode Example
 
 ```go
 import (
