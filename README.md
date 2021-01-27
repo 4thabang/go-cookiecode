@@ -8,9 +8,9 @@ Cookiecode is a package that allows you to encrypt and decrypt your cookies for 
 
 ## Demo Usage
 
-### .env variables
+### .env variables:
 
-WIP
+`WIP`
 
 ### Encode Code Snippet
 
