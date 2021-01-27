@@ -2,35 +2,39 @@ package cookiecode
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/gorilla/securecookie"
 	"github.com/joho/godotenv"
 )
 
 /*
-	TODO: how will the users add their keys
-	TODO: find api for hash and block key generation
+	TODO: how will the users add their encryption keys
+	TODO: find api for hash and block key generation (optional)
 	TODO: better godocs comments
 */
 
-// Encrypt holds the values for our token encoding/decoding.
+// Encrypt holds the values for our 'HashKey' and 'BlockKey' as a struct.
+// These values must be within the Advanced Encryption Standard.
 type Encrypt struct {
-	HashKey  []byte
-	BlockKey []byte
+	HashKey  []byte // AES 256-bit
+	BlockKey []byte // AES 128-bit
 }
 
 // Keys allows us to store our encryption keys securely for re-use.
-func Keys(v map[string]string) (*securecookie.SecureCookie, error) {
+func (e *Encrypt) Keys(v map[string]string) (*securecookie.SecureCookie, error) {
+	// TODO: We need to allow the user to grab their environment variables when needed.
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Println(err)
+		log.Print(err)
 	}
 
-	encrypt := &Encrypt{
+	_ = &Encrypt{
 		HashKey:  []byte(v["HASH_KEY"]),  // AES 256-bit
 		BlockKey: []byte(v["BLOCK_KEY"]), // AES 128-bit
 	}
-	secure := securecookie.New(encrypt.HashKey, encrypt.BlockKey)
+
+	secure := securecookie.New(e.HashKey, e.BlockKey)
 
 	return secure, nil
 }
@@ -38,22 +42,32 @@ func Keys(v map[string]string) (*securecookie.SecureCookie, error) {
 // EncodeType is a struct that houses the value of our key which will be
 // determined by the user at runtime.
 type EncodeType struct {
-	Key string
+	Value string
+	Key   string
+}
+
+// Encoder is an interface that allows us to implement our Encode function
+// in order to fully encode our cookie values.
+type Encoder interface {
+	Encode(v map[string]string) (string, error)
 }
 
 // Encode allows us to encode our cookie in order to keep it secure, safe and unexposed.
-func Encode(value map[string]string) (string, error) {
-	secure, err := Keys(value)
+func (e *Encoder) Encode(value map[string]string) (string, error) {
+	var k Encrypt
+
+	secure, err := k.Keys(value)
 	if err != nil {
 		return "", err
 	}
 
-	et := &EncodeType{
-		Key: value["key"],
+	_ = &EncodeType{
+		Value: value["value"],
+		Key:   value["key"],
 	}
 
-	// cookiecode.Encode("access_token", cookie.Value)
-	encode, err := secure.Encode(et.Key, value)
+	// cookiecode.Encode(value)
+	encode, err := secure.Encode(e.Key, e.Value)
 	if err != nil {
 		return "", err
 	}
@@ -61,17 +75,28 @@ func Encode(value map[string]string) (string, error) {
 	return encode, nil
 }
 
+func (e *EncodeType) encode(v map[string]string) (*EncodeType, error) {
+	et := &EncodeType{
+		Value: v["value"],
+		Key:   v["key"],
+	}
+	return et, nil
+}
+
 // Decode allows us to decode our cookie in order to consume it safely, awaay from prying eyes.
 func Decode(key, cookie string) (map[string]string, error) {
-	// TODO: fix invalid map argument
-	vm := make(map[string]string)
+	v := make(map[string]string)
 
-	secure, err := Keys(vm)
+	var k Encrypt
+
+	secure, err := k.Keys(v)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	var value map[string]string
+
+	// cookiecode.Decode(cookie.Name, cookie.Value)
 	err = secure.Decode(key, cookie, &value)
 	if err != nil {
 		fmt.Println(err)
