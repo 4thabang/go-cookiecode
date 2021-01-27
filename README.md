@@ -2,6 +2,7 @@
 
 Cookiecode is a package that allows you to encrypt and decrypt your cookies for production grade use. Keep your cookies secure.
 
+<<<<<<< HEAD
 ## Installation
 
 `go get github.com/4thabang/go-cookiecode`
@@ -13,6 +14,9 @@ Cookiecode is a package that allows you to encrypt and decrypt your cookies for 
 WIP
 
 ### Encode Code Snippet
+=======
+## Encode Example
+>>>>>>> d50d3cf529d09b46ad5861beabba50dd20e29af6
 
 ```go
 import (
@@ -28,8 +32,8 @@ func CookieEncoder(w http.ResponseWriter, r *http.Request) {
   TODO: Add godotenv .env examples
 
   value := map[string]string{
-    "key": cookieKey,
-    "value": cookieValue
+    "key": cookieKey, // <- Enter cookie key here
+    "value": cookieValue, // <- Enter cookie value here
   }
 
   encoded, err := cookiecode.Encode(value)
@@ -48,7 +52,11 @@ func CookieEncoder(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
+<<<<<<< HEAD
 ### Decode Code Snippet
+=======
+## Decode Example
+>>>>>>> d50d3cf529d09b46ad5861beabba50dd20e29af6
 
 ```go
 import (
@@ -58,7 +66,7 @@ import (
   cookiecode "github.com/4thabang/go-cookiecode"
 )
 
-func CookieDecoer(w http.ResponseWriter, r *http.Request) {
+func CookieDecoder(w http.ResponseWriter, r *http.Request) {
   cookie, err := r.Cookie("key")
   if err != nil {
     log.Print(err)
