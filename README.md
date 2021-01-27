@@ -8,7 +8,7 @@ Cookiecode is a package that allows you to encrypt and decrypt your cookies for 
 
 ## Demo Usage
 
-### .env variables:
+### .env variables
 
 `WIP`
 
@@ -75,4 +75,4 @@ func CookieDecoer(w http.ResponseWriter, r *http.Request) {
 
 # License
 
-WIP
+`WIP`
