@@ -45,7 +45,7 @@ import (
   cookiecode "github.com/4thabang/go-cookiecode"
 )
 
-func CookieDecoer(w http.ResponseWriter, r *http.Request) {
+func CookieDecoder(w http.ResponseWriter, r *http.Request) {
   cookie, err := r.Cookie("key")
   if err != nil {
     log.Print(err)
