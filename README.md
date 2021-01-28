@@ -5,7 +5,7 @@ Cookiecode is a package that allows you to encrypt and decrypt your cookies for 
 
 ## Installation
 
-`go get github.com/4thabang/go-cookiecode`
+```go get github.com/4thabang/go-cookiecode```
 
 ## Demo Usage
 
