@@ -1,4 +1,4 @@
-<h1 align="center">:cookie:Cookiecode:cookie:</h1>
+<h1 align="center">:cookie: Cookiecode :cookie:</h1>
 <br/>
 
 Cookiecode is a package that allows you to encrypt and decrypt your cookies for production grade use. Keep your cookies secure.
