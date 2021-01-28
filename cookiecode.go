@@ -53,21 +53,21 @@ type Encoder interface {
 }
 
 // Encode allows us to encode our cookie in order to keep it secure, safe and unexposed.
-func (e *Encoder) Encode(value map[string]string) (string, error) {
+func (e *Encoder) Encode(v map[string]string) (string, error) {
 	var k Encrypt
 
-	secure, err := k.Keys(value)
+	secure, err := k.Keys(v)
 	if err != nil {
 		return "", err
 	}
 
-	_ = &EncodeType{
-		Value: value["value"],
-		Key:   value["key"],
+	et := &EncodeType{
+		Value: v["value"],
+		Key:   v["key"],
 	}
 
 	// cookiecode.Encode(value)
-	encode, err := secure.Encode(e.Key, e.Value)
+	encode, err := secure.Encode(et.Key, et.Value)
 	if err != nil {
 		return "", err
 	}
