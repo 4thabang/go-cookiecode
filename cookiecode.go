@@ -11,7 +11,7 @@ import (
 /*
 	TODO: how will the users add their encryption keys
 	TODO: find api for hash and block key generation (optional)
-	TODO: better godocs comments a
+	TODO: better godocs comments
 */
 
 // Encrypt holds the values for our 'HashKey' and 'BlockKey' as a struct.
