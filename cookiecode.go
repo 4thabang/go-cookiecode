@@ -52,7 +52,8 @@ type Encoder interface {
 	Encode(v map[string]string) (string, error)
 }
 
-// Encode allows us to encode our cookie in order to keep it secure, safe and unexposed.
+// Encode allows us to encode our cookie in order to keep it secure, safe and
+// unexposed.
 func (e *Encoder) Encode(v map[string]string) (string, error) {
 	var k Encrypt
 
@@ -83,7 +84,8 @@ func (e *EncodeType) encode(v map[string]string) (*EncodeType, error) {
 	return et, nil
 }
 
-// Decode allows us to decode our cookie in order to consume it safely, awaay from prying eyes.
+// Decode allows us to decode our cookie in order to consume it safely, awaay
+// from prying eyes.
 func Decode(key, cookie string) (map[string]string, error) {
 	v := make(map[string]string)
 
