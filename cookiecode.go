@@ -21,17 +21,26 @@ type Encrypt struct {
 	BlockKey []byte // AES 128-bit
 }
 
+func (e *Encrypt) encryptedValues() (*Encrypt, error) {
+	return e, nil
+}
+
 // Keys allows us to store our encryption keys securely for re-use.
-func (e *Encrypt) Keys(v map[string]string) (*securecookie.SecureCookie, error) {
+func Keys(v map[string]string) (*securecookie.SecureCookie, error) {
 	// TODO: We need to allow the user to grab their environment variables when needed.
 	err := godotenv.Load()
 	if err != nil {
 		log.Print(err)
 	}
 
-	_ = &Encrypt{
-		HashKey:  []byte(v["HASH_KEY"]),  // AES 256-bit
-		BlockKey: []byte(v["BLOCK_KEY"]), // AES 128-bit
+	ec := Encrypt{
+		HashKey:  []byte(v["HASH_KEY"]),
+		BlockKey: []byte(v["BLOCK_KEY"]),
+	}
+
+	e, err := ec.encryptedValues()
+	if err != nil {
+		log.Print("These values are invalid")
 	}
 
 	secure := securecookie.New(e.HashKey, e.BlockKey)
@@ -54,7 +63,7 @@ type Encoder interface {
 
 // Encode allows us to encode our cookie in order to keep it secure, safe and
 // unexposed.
-func (e *Encoder) Encode(v map[string]string) (string, error) {
+func Encode(v map[string]string) (string, error) {
 	var k Encrypt
 
 	secure, err := k.Keys(v)
