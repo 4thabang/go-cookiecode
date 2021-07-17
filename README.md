@@ -17,11 +17,11 @@ Cookiecode is a package that allows you to encrypt and decrypt your cookies for 
 
 ```go
 import (
-    "time"
-    "log"
-    "net/http"
+  "time"
+  "log"
+  "net/http"
 
-    cookiecode "github.com/4thabang/go-cookiecode"
+  cookiecode "github.com/4thabang/go-cookiecode"
 )
 
 func CookieEncoder(w http.ResponseWriter, r *http.Request) {
@@ -38,8 +38,8 @@ func CookieEncoder(w http.ResponseWriter, r *http.Request) {
   }
 
   cookie := &http.Cookie{
-    Name: value.Key,
-    Value: encoded, // <- This is our encoded cookie value
+    Name:    value.Key,
+    Value:   encoded, // <- This is our encoded cookie value
     Expires: time.Time, // <- This is when our cookie is set to expire
   }
 
@@ -52,23 +52,24 @@ func CookieEncoder(w http.ResponseWriter, r *http.Request) {
 
 ```go
 import (
-    "log"
-    "net/http"
+  "log"
+  "net/http"
 
-    cookiecode "github.com/4thabang/go-cookiecode"
-    )
+  cookiecode "github.com/4thabang/go-cookiecode"
+)
 
 func CookieDecoer(w http.ResponseWriter, r *http.Request) {
-  cookie, err := r.Cookie("key")
-    if err != nil {
-      log.Print(err)
-    }
+  cookie, err := r.cookie("key")
+  if err != nil {
+    log.Printf("error: %v\n", err)
+  }
 
   value, err := cookiecode.Decode(cookie.Name, cookie.Value)
-    if err != nil {
-      log.Print(err)
-    }
+  if err != nil {
+    log.Printf("error: %v\n", err)
+  }
 
+  // Print the cookie value
   fmt.Println(value["value"])
 }
 ```
