@@ -21,18 +21,21 @@ type Encrypt struct {
 	BlockKey []byte // AES 128-bit
 }
 
+type vObject map[string]string
+
 // Keys allows us to store our encryption keys securely for re-use.
-func (e *Encrypt) Keys(v map[string]string) (*securecookie.SecureCookie, error) {
-	// TODO: We need to allow the user to grab their environment variables when needed.
+func (e *Encrypt) Keys(v vObject) (*securecookie.SecureCookie, error) {
+	// TODO: We need to allow the user to grab their
+	// environment variables when needed.
 	err := godotenv.Load()
 	if err != nil {
-		log.Print(err)
+		log.Printf("Could not load .env: %v\n", err)
 	}
 
-	_ = &Encrypt{
-		HashKey:  []byte(v["HASH_KEY"]),  // AES 256-bit
-		BlockKey: []byte(v["BLOCK_KEY"]), // AES 128-bit
-	}
+	//_ = &Encrypt{
+	//HashKey:  []byte(v["HASH_KEY"]),  // AES 256-bit
+	//BlockKey: []byte(v["BLOCK_KEY"]), // AES 128-bit
+	//}
 
 	secure := securecookie.New(e.HashKey, e.BlockKey)
 
@@ -52,7 +55,8 @@ type Encoder interface {
 	Encode(v map[string]string) (string, error)
 }
 
-// Encode allows us to encode our cookie in order to keep it secure, safe and unexposed.
+// Encode allows us to encode our cookie in order to keep
+// it secure, safe and unexposed.
 func (e *Encoder) Encode(v map[string]string) (string, error) {
 	var k Encrypt
 
@@ -83,7 +87,8 @@ func (e *EncodeType) encode(v map[string]string) (*EncodeType, error) {
 	return et, nil
 }
 
-// Decode allows us to decode our cookie in order to consume it safely, awaay from prying eyes.
+// Decode allows us to decode our cookie in order
+// to consume it safely, awaay from prying eyes.
 func Decode(key, cookie string) (map[string]string, error) {
 	v := make(map[string]string)
 

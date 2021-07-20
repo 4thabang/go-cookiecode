@@ -39,8 +39,8 @@ func CookieEncoder(w http.ResponseWriter, r *http.Request) {
 
   cookie := &http.Cookie{
     Name:    value.Key,
-    Value:   encoded, // <- This is our encoded cookie value
-    Expires: time.Time, // <- This is when our cookie is set to expire
+    Value:   encoded,
+    Expires: time.Time,
   }
 
   // Set our encoded cookie value here
