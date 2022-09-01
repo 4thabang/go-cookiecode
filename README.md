@@ -59,7 +59,7 @@ import (
 )
 
 func CookieDecoer(w http.ResponseWriter, r *http.Request) {
-  cookie, err := r.cookie("key")
+  cookie, err := r.Cookie("key")
   if err != nil {
     log.Printf("error: %v\n", err)
   }
